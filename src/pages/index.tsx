@@ -1,28 +1,30 @@
 import React from "react"
-// importを追記
 import { useStaticQuery, graphql, Link } from "gatsby"
+import { GamesForIndexQuery } from "../../types/graphql-types"
 
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => {
-  // queryの取得処理を追加
-  const data = useStaticQuery(graphql`
-    query allContentfulGame {
-      allContentfulGame {
-        nodes {
-          name
-          playersFrom
-          playersTo
-          playingTimeFrom
-          playingTimeTo
-          targetAgeFrom
-        }
-      }
+type Props = {
+  data: GamesForIndexQuery
+}
+
+export const pageQuery = graphql`
+query GamesForIndex {
+  allContentfulGame {
+    nodes {
+      name
+      playersFrom
+      playersTo
+      playingTimeFrom
+      playingTimeTo
+      targetAgeFrom
     }
-  `)
-  return (
+  }
+}`;
+
+const Component: React.FC<Props> = ({data}) => (
     <Layout>
       <SEO title="Home" />
       <h1>My Game List</h1>
@@ -46,6 +48,5 @@ const IndexPage = () => {
       {/* <Link to="/page-2/">Go to page 2</Link> */}
     </Layout>
   )
-}
 
-export default IndexPage
+export default Component
