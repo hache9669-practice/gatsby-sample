@@ -28,7 +28,6 @@ query GamesForIndex {
 const Component: React.FC<Props> = ({data}) => (
     <Layout>
       <SEO title="Home" />
-      <h1>My Game List</h1>
       {/* 取得したデータを表示する処理を追加 */}
       {data.allContentfulGame.nodes.map(({
           id,
