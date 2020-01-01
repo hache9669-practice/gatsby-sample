@@ -386,7 +386,54 @@ export type ContentfulArticleFieldsEnum =
   'games___playersTo' |
   'games___playingTimeTo' |
   'games___targetAgeFrom' |
-  'games___contentfulid' |
+  'games___article' |
+  'games___article___id' |
+  'games___article___parent___id' |
+  'games___article___parent___children' |
+  'games___article___children' |
+  'games___article___children___id' |
+  'games___article___children___children' |
+  'games___article___internal___content' |
+  'games___article___internal___contentDigest' |
+  'games___article___internal___description' |
+  'games___article___internal___fieldOwners' |
+  'games___article___internal___ignoreType' |
+  'games___article___internal___mediaType' |
+  'games___article___internal___owner' |
+  'games___article___internal___type' |
+  'games___article___postedAt' |
+  'games___article___title' |
+  'games___article___games' |
+  'games___article___games___id' |
+  'games___article___games___children' |
+  'games___article___games___name' |
+  'games___article___games___playersFrom' |
+  'games___article___games___playersTo' |
+  'games___article___games___playingTimeTo' |
+  'games___article___games___targetAgeFrom' |
+  'games___article___games___article' |
+  'games___article___games___spaceId' |
+  'games___article___games___contentful_id' |
+  'games___article___games___createdAt' |
+  'games___article___games___updatedAt' |
+  'games___article___games___node_locale' |
+  'games___article___games___playingTimeFrom' |
+  'games___article___content___id' |
+  'games___article___content___children' |
+  'games___article___content___content' |
+  'games___article___content___nodeType' |
+  'games___article___content___json' |
+  'games___article___spaceId' |
+  'games___article___contentful_id' |
+  'games___article___createdAt' |
+  'games___article___updatedAt' |
+  'games___article___sys___revision' |
+  'games___article___node_locale' |
+  'games___article___childContentfulArticleContentRichTextNode___id' |
+  'games___article___childContentfulArticleContentRichTextNode___children' |
+  'games___article___childContentfulArticleContentRichTextNode___content' |
+  'games___article___childContentfulArticleContentRichTextNode___nodeType' |
+  'games___article___childContentfulArticleContentRichTextNode___json' |
   'games___description___id' |
   'games___description___parent___id' |
   'games___description___parent___children' |
@@ -513,6 +560,7 @@ export type ContentfulArticleFieldsEnum =
   'sys___contentType___sys___type' |
   'sys___contentType___sys___linkType' |
   'sys___contentType___sys___id' |
+  'sys___contentType___sys___contentful_id' |
   'node_locale' |
   'childContentfulArticleContentRichTextNode___id' |
   'childContentfulArticleContentRichTextNode___parent___id' |
@@ -574,6 +622,10 @@ export type ContentfulArticleFilterInput = {
   childContentfulArticleContentRichTextNode?: Maybe<ContentfulArticleContentRichTextNodeFilterInput>,
 };
 
+export type ContentfulArticleFilterListInput = {
+  elemMatch?: Maybe<ContentfulArticleFilterInput>,
+};
+
 export type ContentfulArticleGroupConnection = {
   totalCount: Scalars['Int'],
   edges: Array<ContentfulArticleEdge>,
@@ -605,12 +657,14 @@ export type ContentfulArticleSysContentTypeSys = {
   type?: Maybe<Scalars['String']>,
   linkType?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['String']>,
+  contentful_id?: Maybe<Scalars['String']>,
 };
 
 export type ContentfulArticleSysContentTypeSysFilterInput = {
   type?: Maybe<StringQueryOperatorInput>,
   linkType?: Maybe<StringQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
+  contentful_id?: Maybe<StringQueryOperatorInput>,
 };
 
 export type ContentfulArticleSysFilterInput = {
@@ -1131,7 +1185,7 @@ export type ContentfulGame = Node & {
   playersTo?: Maybe<Scalars['Int']>,
   playingTimeTo?: Maybe<Scalars['Int']>,
   targetAgeFrom?: Maybe<Scalars['Int']>,
-  contentfulid?: Maybe<Scalars['Int']>,
+  article?: Maybe<Array<Maybe<ContentfulArticle>>>,
   description?: Maybe<ContentfulGameDescriptionRichTextNode>,
   bggUrl?: Maybe<ContentfulGameBggUrlTextNode>,
   spaceId?: Maybe<Scalars['String']>,
@@ -1659,7 +1713,143 @@ export type ContentfulGameFieldsEnum =
   'playersTo' |
   'playingTimeTo' |
   'targetAgeFrom' |
-  'contentfulid' |
+  'article' |
+  'article___id' |
+  'article___parent___id' |
+  'article___parent___parent___id' |
+  'article___parent___parent___children' |
+  'article___parent___children' |
+  'article___parent___children___id' |
+  'article___parent___children___children' |
+  'article___parent___internal___content' |
+  'article___parent___internal___contentDigest' |
+  'article___parent___internal___description' |
+  'article___parent___internal___fieldOwners' |
+  'article___parent___internal___ignoreType' |
+  'article___parent___internal___mediaType' |
+  'article___parent___internal___owner' |
+  'article___parent___internal___type' |
+  'article___children' |
+  'article___children___id' |
+  'article___children___parent___id' |
+  'article___children___parent___children' |
+  'article___children___children' |
+  'article___children___children___id' |
+  'article___children___children___children' |
+  'article___children___internal___content' |
+  'article___children___internal___contentDigest' |
+  'article___children___internal___description' |
+  'article___children___internal___fieldOwners' |
+  'article___children___internal___ignoreType' |
+  'article___children___internal___mediaType' |
+  'article___children___internal___owner' |
+  'article___children___internal___type' |
+  'article___internal___content' |
+  'article___internal___contentDigest' |
+  'article___internal___description' |
+  'article___internal___fieldOwners' |
+  'article___internal___ignoreType' |
+  'article___internal___mediaType' |
+  'article___internal___owner' |
+  'article___internal___type' |
+  'article___postedAt' |
+  'article___title' |
+  'article___games' |
+  'article___games___id' |
+  'article___games___parent___id' |
+  'article___games___parent___children' |
+  'article___games___children' |
+  'article___games___children___id' |
+  'article___games___children___children' |
+  'article___games___internal___content' |
+  'article___games___internal___contentDigest' |
+  'article___games___internal___description' |
+  'article___games___internal___fieldOwners' |
+  'article___games___internal___ignoreType' |
+  'article___games___internal___mediaType' |
+  'article___games___internal___owner' |
+  'article___games___internal___type' |
+  'article___games___name' |
+  'article___games___playersFrom' |
+  'article___games___playersTo' |
+  'article___games___playingTimeTo' |
+  'article___games___targetAgeFrom' |
+  'article___games___article' |
+  'article___games___article___id' |
+  'article___games___article___children' |
+  'article___games___article___postedAt' |
+  'article___games___article___title' |
+  'article___games___article___games' |
+  'article___games___article___spaceId' |
+  'article___games___article___contentful_id' |
+  'article___games___article___createdAt' |
+  'article___games___article___updatedAt' |
+  'article___games___article___node_locale' |
+  'article___games___description___id' |
+  'article___games___description___children' |
+  'article___games___description___content' |
+  'article___games___description___nodeType' |
+  'article___games___description___description' |
+  'article___games___description___json' |
+  'article___games___bggUrl___id' |
+  'article___games___bggUrl___children' |
+  'article___games___bggUrl___bggUrl' |
+  'article___games___spaceId' |
+  'article___games___contentful_id' |
+  'article___games___createdAt' |
+  'article___games___updatedAt' |
+  'article___games___sys___revision' |
+  'article___games___node_locale' |
+  'article___games___playingTimeFrom' |
+  'article___games___childContentfulGameDescriptionRichTextNode___id' |
+  'article___games___childContentfulGameDescriptionRichTextNode___children' |
+  'article___games___childContentfulGameDescriptionRichTextNode___content' |
+  'article___games___childContentfulGameDescriptionRichTextNode___nodeType' |
+  'article___games___childContentfulGameDescriptionRichTextNode___description' |
+  'article___games___childContentfulGameDescriptionRichTextNode___json' |
+  'article___games___childContentfulGameBggUrlTextNode___id' |
+  'article___games___childContentfulGameBggUrlTextNode___children' |
+  'article___games___childContentfulGameBggUrlTextNode___bggUrl' |
+  'article___content___id' |
+  'article___content___parent___id' |
+  'article___content___parent___children' |
+  'article___content___children' |
+  'article___content___children___id' |
+  'article___content___children___children' |
+  'article___content___internal___content' |
+  'article___content___internal___contentDigest' |
+  'article___content___internal___description' |
+  'article___content___internal___fieldOwners' |
+  'article___content___internal___ignoreType' |
+  'article___content___internal___mediaType' |
+  'article___content___internal___owner' |
+  'article___content___internal___type' |
+  'article___content___content' |
+  'article___content___nodeType' |
+  'article___content___json' |
+  'article___spaceId' |
+  'article___contentful_id' |
+  'article___createdAt' |
+  'article___updatedAt' |
+  'article___sys___revision' |
+  'article___node_locale' |
+  'article___childContentfulArticleContentRichTextNode___id' |
+  'article___childContentfulArticleContentRichTextNode___parent___id' |
+  'article___childContentfulArticleContentRichTextNode___parent___children' |
+  'article___childContentfulArticleContentRichTextNode___children' |
+  'article___childContentfulArticleContentRichTextNode___children___id' |
+  'article___childContentfulArticleContentRichTextNode___children___children' |
+  'article___childContentfulArticleContentRichTextNode___internal___content' |
+  'article___childContentfulArticleContentRichTextNode___internal___contentDigest' |
+  'article___childContentfulArticleContentRichTextNode___internal___description' |
+  'article___childContentfulArticleContentRichTextNode___internal___fieldOwners' |
+  'article___childContentfulArticleContentRichTextNode___internal___ignoreType' |
+  'article___childContentfulArticleContentRichTextNode___internal___mediaType' |
+  'article___childContentfulArticleContentRichTextNode___internal___owner' |
+  'article___childContentfulArticleContentRichTextNode___internal___type' |
+  'article___childContentfulArticleContentRichTextNode___content' |
+  'article___childContentfulArticleContentRichTextNode___nodeType' |
+  'article___childContentfulArticleContentRichTextNode___json' |
   'description___id' |
   'description___parent___id' |
   'description___parent___parent___id' |
@@ -1755,6 +1945,7 @@ export type ContentfulGameFieldsEnum =
   'sys___contentType___sys___type' |
   'sys___contentType___sys___linkType' |
   'sys___contentType___sys___id' |
+  'sys___contentType___sys___contentful_id' |
   'node_locale' |
   'playingTimeFrom' |
   'childContentfulGameDescriptionRichTextNode___id' |
@@ -1855,7 +2046,7 @@ export type ContentfulGameFilterInput = {
   playersTo?: Maybe<IntQueryOperatorInput>,
   playingTimeTo?: Maybe<IntQueryOperatorInput>,
   targetAgeFrom?: Maybe<IntQueryOperatorInput>,
-  contentfulid?: Maybe<IntQueryOperatorInput>,
+  article?: Maybe<ContentfulArticleFilterListInput>,
   description?: Maybe<ContentfulGameDescriptionRichTextNodeFilterInput>,
   bggUrl?: Maybe<ContentfulGameBggUrlTextNodeFilterInput>,
   spaceId?: Maybe<StringQueryOperatorInput>,
@@ -1904,12 +2095,14 @@ export type ContentfulGameSysContentTypeSys = {
   type?: Maybe<Scalars['String']>,
   linkType?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['String']>,
+  contentful_id?: Maybe<Scalars['String']>,
 };
 
 export type ContentfulGameSysContentTypeSysFilterInput = {
   type?: Maybe<StringQueryOperatorInput>,
   linkType?: Maybe<StringQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
+  contentful_id?: Maybe<StringQueryOperatorInput>,
 };
 
 export type ContentfulGameSysFilterInput = {
@@ -2044,6 +2237,8 @@ export type Directory = Node & {
   ctime: Scalars['Date'],
   birthtime?: Maybe<Scalars['Date']>,
   birthtimeMs?: Maybe<Scalars['Float']>,
+  blksize?: Maybe<Scalars['Int']>,
+  blocks?: Maybe<Scalars['Int']>,
   id: Scalars['ID'],
   parent?: Maybe<Node>,
   children: Array<Node>,
@@ -2165,6 +2360,8 @@ export type DirectoryFieldsEnum =
   'ctime' |
   'birthtime' |
   'birthtimeMs' |
+  'blksize' |
+  'blocks' |
   'id' |
   'parent___id' |
   'parent___parent___id' |
@@ -2284,6 +2481,8 @@ export type DirectoryFilterInput = {
   ctime?: Maybe<DateQueryOperatorInput>,
   birthtime?: Maybe<DateQueryOperatorInput>,
   birthtimeMs?: Maybe<FloatQueryOperatorInput>,
+  blksize?: Maybe<IntQueryOperatorInput>,
+  blocks?: Maybe<IntQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
   parent?: Maybe<NodeFilterInput>,
   children?: Maybe<NodeFilterListInput>,
@@ -2342,6 +2541,8 @@ export type File = Node & {
   ctime: Scalars['Date'],
   birthtime?: Maybe<Scalars['Date']>,
   birthtimeMs?: Maybe<Scalars['Float']>,
+  blksize?: Maybe<Scalars['Int']>,
+  blocks?: Maybe<Scalars['Int']>,
   /** Copy file to static directory and return public url to it */
   publicURL?: Maybe<Scalars['String']>,
   childImageSharp?: Maybe<ImageSharp>,
@@ -2466,6 +2667,8 @@ export type FileFieldsEnum =
   'ctime' |
   'birthtime' |
   'birthtimeMs' |
+  'blksize' |
+  'blocks' |
   'publicURL' |
   'childImageSharp___fixed___base64' |
   'childImageSharp___fixed___tracedSVG' |
@@ -2677,6 +2880,8 @@ export type FileFilterInput = {
   ctime?: Maybe<DateQueryOperatorInput>,
   birthtime?: Maybe<DateQueryOperatorInput>,
   birthtimeMs?: Maybe<FloatQueryOperatorInput>,
+  blksize?: Maybe<IntQueryOperatorInput>,
+  blocks?: Maybe<IntQueryOperatorInput>,
   publicURL?: Maybe<StringQueryOperatorInput>,
   childImageSharp?: Maybe<ImageSharpFilterInput>,
   id?: Maybe<StringQueryOperatorInput>,
@@ -3317,16 +3522,16 @@ export type Query = {
   allDirectory: DirectoryConnection,
   imageSharp?: Maybe<ImageSharp>,
   allImageSharp: ImageSharpConnection,
-  contentfulGameBggUrlTextNode?: Maybe<ContentfulGameBggUrlTextNode>,
-  allContentfulGameBggUrlTextNode: ContentfulGameBggUrlTextNodeConnection,
-  contentfulGameDescriptionRichTextNode?: Maybe<ContentfulGameDescriptionRichTextNode>,
-  allContentfulGameDescriptionRichTextNode: ContentfulGameDescriptionRichTextNodeConnection,
   contentfulAsset?: Maybe<ContentfulAsset>,
   allContentfulAsset: ContentfulAssetConnection,
   contentfulArticleContentRichTextNode?: Maybe<ContentfulArticleContentRichTextNode>,
   allContentfulArticleContentRichTextNode: ContentfulArticleContentRichTextNodeConnection,
   contentfulArticle?: Maybe<ContentfulArticle>,
   allContentfulArticle: ContentfulArticleConnection,
+  contentfulGameBggUrlTextNode?: Maybe<ContentfulGameBggUrlTextNode>,
+  allContentfulGameBggUrlTextNode: ContentfulGameBggUrlTextNodeConnection,
+  contentfulGameDescriptionRichTextNode?: Maybe<ContentfulGameDescriptionRichTextNode>,
+  allContentfulGameDescriptionRichTextNode: ContentfulGameDescriptionRichTextNodeConnection,
   contentfulGame?: Maybe<ContentfulGame>,
   allContentfulGame: ContentfulGameConnection,
   contentfulContentType?: Maybe<ContentfulContentType>,
@@ -3372,6 +3577,8 @@ export type QueryFileArgs = {
   ctime?: Maybe<DateQueryOperatorInput>,
   birthtime?: Maybe<DateQueryOperatorInput>,
   birthtimeMs?: Maybe<FloatQueryOperatorInput>,
+  blksize?: Maybe<IntQueryOperatorInput>,
+  blocks?: Maybe<IntQueryOperatorInput>,
   publicURL?: Maybe<StringQueryOperatorInput>,
   childImageSharp?: Maybe<ImageSharpFilterInput>,
   id?: Maybe<StringQueryOperatorInput>,
@@ -3421,6 +3628,8 @@ export type QueryDirectoryArgs = {
   ctime?: Maybe<DateQueryOperatorInput>,
   birthtime?: Maybe<DateQueryOperatorInput>,
   birthtimeMs?: Maybe<FloatQueryOperatorInput>,
+  blksize?: Maybe<IntQueryOperatorInput>,
+  blocks?: Maybe<IntQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
   parent?: Maybe<NodeFilterInput>,
   children?: Maybe<NodeFilterListInput>,
@@ -3453,43 +3662,6 @@ export type QueryImageSharpArgs = {
 export type QueryAllImageSharpArgs = {
   filter?: Maybe<ImageSharpFilterInput>,
   sort?: Maybe<ImageSharpSortInput>,
-  skip?: Maybe<Scalars['Int']>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type QueryContentfulGameBggUrlTextNodeArgs = {
-  id?: Maybe<StringQueryOperatorInput>,
-  parent?: Maybe<NodeFilterInput>,
-  children?: Maybe<NodeFilterListInput>,
-  internal?: Maybe<InternalFilterInput>,
-  bggUrl?: Maybe<StringQueryOperatorInput>
-};
-
-
-export type QueryAllContentfulGameBggUrlTextNodeArgs = {
-  filter?: Maybe<ContentfulGameBggUrlTextNodeFilterInput>,
-  sort?: Maybe<ContentfulGameBggUrlTextNodeSortInput>,
-  skip?: Maybe<Scalars['Int']>,
-  limit?: Maybe<Scalars['Int']>
-};
-
-
-export type QueryContentfulGameDescriptionRichTextNodeArgs = {
-  id?: Maybe<StringQueryOperatorInput>,
-  parent?: Maybe<NodeFilterInput>,
-  children?: Maybe<NodeFilterListInput>,
-  internal?: Maybe<InternalFilterInput>,
-  content?: Maybe<ContentfulGameDescriptionRichTextNodeContentFilterListInput>,
-  nodeType?: Maybe<StringQueryOperatorInput>,
-  description?: Maybe<StringQueryOperatorInput>,
-  json?: Maybe<JsonQueryOperatorInput>
-};
-
-
-export type QueryAllContentfulGameDescriptionRichTextNodeArgs = {
-  filter?: Maybe<ContentfulGameDescriptionRichTextNodeFilterInput>,
-  sort?: Maybe<ContentfulGameDescriptionRichTextNodeSortInput>,
   skip?: Maybe<Scalars['Int']>,
   limit?: Maybe<Scalars['Int']>
 };
@@ -3567,6 +3739,43 @@ export type QueryAllContentfulArticleArgs = {
 };
 
 
+export type QueryContentfulGameBggUrlTextNodeArgs = {
+  id?: Maybe<StringQueryOperatorInput>,
+  parent?: Maybe<NodeFilterInput>,
+  children?: Maybe<NodeFilterListInput>,
+  internal?: Maybe<InternalFilterInput>,
+  bggUrl?: Maybe<StringQueryOperatorInput>
+};
+
+
+export type QueryAllContentfulGameBggUrlTextNodeArgs = {
+  filter?: Maybe<ContentfulGameBggUrlTextNodeFilterInput>,
+  sort?: Maybe<ContentfulGameBggUrlTextNodeSortInput>,
+  skip?: Maybe<Scalars['Int']>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
+export type QueryContentfulGameDescriptionRichTextNodeArgs = {
+  id?: Maybe<StringQueryOperatorInput>,
+  parent?: Maybe<NodeFilterInput>,
+  children?: Maybe<NodeFilterListInput>,
+  internal?: Maybe<InternalFilterInput>,
+  content?: Maybe<ContentfulGameDescriptionRichTextNodeContentFilterListInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+  description?: Maybe<StringQueryOperatorInput>,
+  json?: Maybe<JsonQueryOperatorInput>
+};
+
+
+export type QueryAllContentfulGameDescriptionRichTextNodeArgs = {
+  filter?: Maybe<ContentfulGameDescriptionRichTextNodeFilterInput>,
+  sort?: Maybe<ContentfulGameDescriptionRichTextNodeSortInput>,
+  skip?: Maybe<Scalars['Int']>,
+  limit?: Maybe<Scalars['Int']>
+};
+
+
 export type QueryContentfulGameArgs = {
   id?: Maybe<StringQueryOperatorInput>,
   parent?: Maybe<NodeFilterInput>,
@@ -3577,7 +3786,7 @@ export type QueryContentfulGameArgs = {
   playersTo?: Maybe<IntQueryOperatorInput>,
   playingTimeTo?: Maybe<IntQueryOperatorInput>,
   targetAgeFrom?: Maybe<IntQueryOperatorInput>,
-  contentfulid?: Maybe<IntQueryOperatorInput>,
+  article?: Maybe<ContentfulArticleFilterListInput>,
   description?: Maybe<ContentfulGameDescriptionRichTextNodeFilterInput>,
   bggUrl?: Maybe<ContentfulGameBggUrlTextNodeFilterInput>,
   spaceId?: Maybe<StringQueryOperatorInput>,
@@ -3627,8 +3836,6 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>,
   port?: Maybe<IntQueryOperatorInput>,
   host?: Maybe<StringQueryOperatorInput>,
-  polyfill?: Maybe<BooleanQueryOperatorInput>,
-  pathPrefix?: Maybe<StringQueryOperatorInput>,
   buildTime?: Maybe<DateQueryOperatorInput>
 };
 
@@ -3671,11 +3878,12 @@ export type QuerySitePageArgs = {
   parent?: Maybe<NodeFilterInput>,
   children?: Maybe<NodeFilterListInput>,
   internal?: Maybe<InternalFilterInput>,
-  path?: Maybe<StringQueryOperatorInput>,
   internalComponentName?: Maybe<StringQueryOperatorInput>,
+  path?: Maybe<StringQueryOperatorInput>,
   component?: Maybe<StringQueryOperatorInput>,
   componentChunkName?: Maybe<StringQueryOperatorInput>,
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>,
+  context?: Maybe<SitePageContextFilterInput>,
   pluginCreator?: Maybe<SitePluginFilterInput>,
   pluginCreatorId?: Maybe<StringQueryOperatorInput>,
   componentPath?: Maybe<StringQueryOperatorInput>
@@ -3697,8 +3905,6 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>,
   port?: Maybe<Scalars['Int']>,
   host?: Maybe<Scalars['String']>,
-  polyfill?: Maybe<Scalars['Boolean']>,
-  pathPrefix?: Maybe<Scalars['String']>,
   buildTime?: Maybe<Scalars['Date']>,
 };
 
@@ -3829,8 +4035,6 @@ export type SiteFieldsEnum =
   'siteMetadata___author' |
   'port' |
   'host' |
-  'polyfill' |
-  'pathPrefix' |
   'buildTime';
 
 export type SiteFilterInput = {
@@ -3841,8 +4045,6 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>,
   port?: Maybe<IntQueryOperatorInput>,
   host?: Maybe<StringQueryOperatorInput>,
-  polyfill?: Maybe<BooleanQueryOperatorInput>,
-  pathPrefix?: Maybe<StringQueryOperatorInput>,
   buildTime?: Maybe<DateQueryOperatorInput>,
 };
 
@@ -3860,11 +4062,12 @@ export type SitePage = Node & {
   parent?: Maybe<Node>,
   children: Array<Node>,
   internal: Internal,
-  path?: Maybe<Scalars['String']>,
   internalComponentName?: Maybe<Scalars['String']>,
+  path?: Maybe<Scalars['String']>,
   component?: Maybe<Scalars['String']>,
   componentChunkName?: Maybe<Scalars['String']>,
   isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>,
+  context?: Maybe<SitePageContext>,
   pluginCreator?: Maybe<SitePlugin>,
   pluginCreatorId?: Maybe<Scalars['String']>,
   componentPath?: Maybe<Scalars['String']>,
@@ -3889,6 +4092,136 @@ export type SitePageConnectionGroupArgs = {
   skip?: Maybe<Scalars['Int']>,
   limit?: Maybe<Scalars['Int']>,
   field: SitePageFieldsEnum
+};
+
+export type SitePageContext = {
+  id?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  playersFrom?: Maybe<Scalars['Int']>,
+  playersTo?: Maybe<Scalars['Int']>,
+  playingTimeFrom?: Maybe<Scalars['Int']>,
+  playingTimeTo?: Maybe<Scalars['Int']>,
+  targetAgeFrom?: Maybe<Scalars['Int']>,
+  description?: Maybe<SitePageContextDescription>,
+  bggUrl?: Maybe<SitePageContextBggUrl>,
+  updatedAt?: Maybe<Scalars['Date']>,
+};
+
+
+export type SitePageContextUpdatedAtArgs = {
+  formatString?: Maybe<Scalars['String']>,
+  fromNow?: Maybe<Scalars['Boolean']>,
+  difference?: Maybe<Scalars['String']>,
+  locale?: Maybe<Scalars['String']>
+};
+
+export type SitePageContextBggUrl = {
+  bggUrl?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextBggUrlFilterInput = {
+  bggUrl?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescription = {
+  description?: Maybe<Scalars['String']>,
+  json?: Maybe<SitePageContextDescriptionJson>,
+};
+
+export type SitePageContextDescriptionFilterInput = {
+  description?: Maybe<StringQueryOperatorInput>,
+  json?: Maybe<SitePageContextDescriptionJsonFilterInput>,
+};
+
+export type SitePageContextDescriptionJson = {
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContent>>>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContent = {
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContent>>>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContent = {
+  data?: Maybe<SitePageContextDescriptionJsonContentContentData>,
+  marks?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContentMarks>>>,
+  value?: Maybe<Scalars['String']>,
+  nodeType?: Maybe<Scalars['String']>,
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContentContent>>>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContent = {
+  value?: Maybe<Scalars['String']>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContentFilterInput = {
+  value?: Maybe<StringQueryOperatorInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentData = {
+  uri?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentDataFilterInput = {
+  uri?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentFilterInput = {
+  data?: Maybe<SitePageContextDescriptionJsonContentContentDataFilterInput>,
+  marks?: Maybe<SitePageContextDescriptionJsonContentContentMarksFilterListInput>,
+  value?: Maybe<StringQueryOperatorInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+  content?: Maybe<SitePageContextDescriptionJsonContentContentContentFilterListInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarks = {
+  type?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarksFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarksFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentMarksFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentFilterInput = {
+  content?: Maybe<SitePageContextDescriptionJsonContentContentFilterListInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonFilterInput = {
+  content?: Maybe<SitePageContextDescriptionJsonContentFilterListInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>,
+  name?: Maybe<StringQueryOperatorInput>,
+  playersFrom?: Maybe<IntQueryOperatorInput>,
+  playersTo?: Maybe<IntQueryOperatorInput>,
+  playingTimeFrom?: Maybe<IntQueryOperatorInput>,
+  playingTimeTo?: Maybe<IntQueryOperatorInput>,
+  targetAgeFrom?: Maybe<IntQueryOperatorInput>,
+  description?: Maybe<SitePageContextDescriptionFilterInput>,
+  bggUrl?: Maybe<SitePageContextBggUrlFilterInput>,
+  updatedAt?: Maybe<DateQueryOperatorInput>,
 };
 
 export type SitePageEdge = {
@@ -3984,11 +4317,23 @@ export type SitePageFieldsEnum =
   'internal___mediaType' |
   'internal___owner' |
   'internal___type' |
-  'path' |
   'internalComponentName' |
+  'path' |
   'component' |
   'componentChunkName' |
   'isCreatedByStatefulCreatePages' |
+  'context___id' |
+  'context___name' |
+  'context___playersFrom' |
+  'context___playersTo' |
+  'context___playingTimeFrom' |
+  'context___playingTimeTo' |
+  'context___targetAgeFrom' |
+  'context___description___description' |
+  'context___description___json___content' |
+  'context___description___json___nodeType' |
+  'context___bggUrl___bggUrl' |
+  'context___updatedAt' |
   'pluginCreator___id' |
   'pluginCreator___parent___id' |
   'pluginCreator___parent___parent___id' |
@@ -4070,11 +4415,12 @@ export type SitePageFilterInput = {
   parent?: Maybe<NodeFilterInput>,
   children?: Maybe<NodeFilterListInput>,
   internal?: Maybe<InternalFilterInput>,
-  path?: Maybe<StringQueryOperatorInput>,
   internalComponentName?: Maybe<StringQueryOperatorInput>,
+  path?: Maybe<StringQueryOperatorInput>,
   component?: Maybe<StringQueryOperatorInput>,
   componentChunkName?: Maybe<StringQueryOperatorInput>,
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>,
+  context?: Maybe<SitePageContextFilterInput>,
   pluginCreator?: Maybe<SitePluginFilterInput>,
   pluginCreatorId?: Maybe<StringQueryOperatorInput>,
   componentPath?: Maybe<StringQueryOperatorInput>,
@@ -4422,3 +4768,11 @@ export type GamesForIndexQueryVariables = {};
 
 
 export type GamesForIndexQuery = { allContentfulGame: { nodes: Array<Pick<ContentfulGame, 'id' | 'name' | 'playersFrom' | 'playersTo' | 'playingTimeFrom' | 'playingTimeTo' | 'targetAgeFrom'>> } };
+
+export type GamesForEachPagesQueryVariables = {};
+
+
+export type GamesForEachPagesQuery = { allContentfulGame: { nodes: Array<(
+      Pick<ContentfulGame, 'id' | 'name' | 'playersFrom' | 'playersTo' | 'playingTimeFrom' | 'playingTimeTo' | 'targetAgeFrom' | 'updatedAt'>
+      & { description: Maybe<Pick<ContentfulGameDescriptionRichTextNode, 'description' | 'json'>>, bggUrl: Maybe<Pick<ContentfulGameBggUrlTextNode, 'bggUrl'>> }
+    )> } };

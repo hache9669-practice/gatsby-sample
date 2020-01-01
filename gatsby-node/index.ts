@@ -1,53 +1,49 @@
 import * as path from "path"
 import { GatsbyNode } from "gatsby"
-// import { Site, SiteSiteMetadata } from "../types/graphql-types"
-// // // ______________________________________________________
-// //
-type Result = {
-  game: any
-}
-// export type GamePageContext = {
-//   game: Game
-// } // template で利用するため export
-// ______________________________________________________
-//
+import { ContentfulGame, GamesForEachPagesQuery } from "../types/graphql-types"
+
+// TODO 型生成のために二重管理になってしまっているのがよろしくない
 const query = `
-{
-    contentfulGame(id: {eq: "b15fcf97-c051-53e8-be3b-ae9731722cb5"}) {
+query GamesForEachPages {
+  allContentfulGame {
+    nodes {
       id
       name
-      description {
-        description
-      }
       playersFrom
       playersTo
       playingTimeFrom
       playingTimeTo
       targetAgeFrom
+      description {
+        description
+        json
+      }
+      bggUrl {
+        bggUrl
+      }
+      updatedAt
     }
   }
-`
+}`;
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions: { createPage }
 }) => {
-  const result = await graphql<Result>(query)
-//   if (result.errors || !result.data) {
-//     throw result.errors
-//   }
-//   const { siteMetadata } = result.data.site
-//   if (!siteMetadata || !siteMetadata.author) {
-//     throw new Error("undefined authors")
-//   }
+  const result = await graphql<GamesForEachPagesQuery>(query);
+  if (result.errors || !result.data) {
+    throw result.errors
+  }
+  const games = result.data.allContentfulGame.nodes
+  if (!games || games.length === 0) {
+    throw new Error("undefined games")
+  }
 
-//   for (let author of siteMetadata.author) {
-//     if (author) {
-//       createPage<SiteSiteMetadata>({
-//         path: `/author/${author}/`,
-//         component: path.resolve("src/templates/author.tsx"),
-//         context: { author }
-//       })
-//     }
-//   }
+  games.forEach(game => {
+    createPage<ContentfulGame>({
+      path: `/games/${game.name}_${game.id}`,
+      component: path.resolve("src/templates/game.tsx"),
+      context: game as ContentfulGame
+    })
+  });
 }

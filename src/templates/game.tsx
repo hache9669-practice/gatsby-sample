@@ -1,20 +1,33 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { SiteMetadataPageContext } from "../../gatsby-node"
+import { ContentfulGame } from "../../types/graphql-types"
+import { BLOCKS, MARKS } from "@contentful/rich-text-types"
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+
 // ______________________________________________________
 //
 type Props = {
-  pageContext: SiteMetadataPageContext
+  pageContext: ContentfulGame
 }
 // ______________________________________________________
 //
 const Component: React.FC<Props> = ({ pageContext }) => (
   <div>
-    <h1>Author name is {pageContext.siteMetadata.author}</h1>
+    <h1>{pageContext.name}</h1>
     <ul>
-      <li><Link to="/authors/">Back to authors</Link></li>
+      <li>プレイ人数：{pageContext.playersFrom}~{pageContext.playersTo}人</li>
+      <li>所要時間：{pageContext.playingTimeFrom}~{pageContext.playingTimeTo}分</li>
+      <li>プレイ人数：{pageContext.playersFrom}~{pageContext.playersTo}人</li>
+      <li>対象年齢：{pageContext.targetAgeFrom}歳～</li>
+      <li>{documentToReactComponents(pageContext.description.json)}</li>
+      <li>最終更新：{pageContext.updatedAt}</li>
+      <li><a href={pageContext.bggUrl.bggUrl} target="_blank">Open BGG</a></li>
       <li><Link to="/">Back to top</Link></li>
     </ul>
+    <pre>
+      recieved data
+      {JSON.stringify(pageContext,null,2)}
+    </pre>
   </div>
 )
 // ______________________________________________________
