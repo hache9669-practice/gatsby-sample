@@ -45,7 +45,7 @@ const Component: React.FC<Props> = ({data}) => (
           <p>所要時間：{playingTimeFrom}~{playingTimeTo}分</p>
           <p>プレイ人数：{playersFrom}~{playersTo}人</p>
           <p>対象年齢：{targetAgeFrom}歳～</p>
-          <Link to={`/games/${id}`}>Show more</Link>
+          <Link to={`/games/${name}_${id}`}>Show more</Link>
         </div>
       ))}
       {/* <Link to="/page-2/">Go to page 2</Link> */}
