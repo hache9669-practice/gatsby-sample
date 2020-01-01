@@ -1,33 +1,38 @@
-// import path from "path"
-// import { GatsbyNode } from "gatsby"
+import * as path from "path"
+import { GatsbyNode } from "gatsby"
 // import { Site, SiteSiteMetadata } from "../types/graphql-types"
 // // // ______________________________________________________
 // //
-// type Result = {
-//   site: Site
-// }
-// export type SiteMetadataPageContext = {
-//   siteMetadata: SiteSiteMetadata
+type Result = {
+  game: any
+}
+// export type GamePageContext = {
+//   game: Game
 // } // template で利用するため export
-// // ______________________________________________________
-// //
-// const query = `
-// {
-//   site {
-//     siteMetadata {
-//         title
-//         description
-//         author
-//     }
-//   }
-// }
-// `
+// ______________________________________________________
+//
+const query = `
+{
+    contentfulGame(id: {eq: "b15fcf97-c051-53e8-be3b-ae9731722cb5"}) {
+      id
+      name
+      description {
+        description
+      }
+      playersFrom
+      playersTo
+      playingTimeFrom
+      playingTimeTo
+      targetAgeFrom
+    }
+  }
+`
 
-// export const createPages: GatsbyNode["createPages"] = async ({
-//   graphql,
-//   actions: { createPage }
-// }) => {
-//   const result = await graphql<Result>(query)
+export const createPages: GatsbyNode["createPages"] = async ({
+  graphql,
+  actions: { createPage }
+}) => {
+  const result = await graphql<Result>(query)
 //   if (result.errors || !result.data) {
 //     throw result.errors
 //   }
@@ -45,4 +50,4 @@
 //       })
 //     }
 //   }
-// }
+}
