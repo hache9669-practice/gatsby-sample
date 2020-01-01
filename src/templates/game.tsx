@@ -25,6 +25,7 @@ const Component: React.FC<Props> = ({ pageContext }) => (
       <li><Link to="/">Back to top</Link></li>
     </ul>
     <pre>
+      recieved data
       {JSON.stringify(pageContext,null,2)}
     </pre>
   </div>
