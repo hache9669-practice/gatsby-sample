@@ -4119,10 +4119,90 @@ export type SitePageContextBggUrlFilterInput = {
 
 export type SitePageContextDescription = {
   description?: Maybe<Scalars['String']>,
+  json?: Maybe<SitePageContextDescriptionJson>,
 };
 
 export type SitePageContextDescriptionFilterInput = {
   description?: Maybe<StringQueryOperatorInput>,
+  json?: Maybe<SitePageContextDescriptionJsonFilterInput>,
+};
+
+export type SitePageContextDescriptionJson = {
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContent>>>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContent = {
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContent>>>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContent = {
+  data?: Maybe<SitePageContextDescriptionJsonContentContentData>,
+  marks?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContentMarks>>>,
+  value?: Maybe<Scalars['String']>,
+  nodeType?: Maybe<Scalars['String']>,
+  content?: Maybe<Array<Maybe<SitePageContextDescriptionJsonContentContentContent>>>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContent = {
+  value?: Maybe<Scalars['String']>,
+  nodeType?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContentFilterInput = {
+  value?: Maybe<StringQueryOperatorInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentData = {
+  uri?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentDataFilterInput = {
+  uri?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentFilterInput = {
+  data?: Maybe<SitePageContextDescriptionJsonContentContentDataFilterInput>,
+  marks?: Maybe<SitePageContextDescriptionJsonContentContentMarksFilterListInput>,
+  value?: Maybe<StringQueryOperatorInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+  content?: Maybe<SitePageContextDescriptionJsonContentContentContentFilterListInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarks = {
+  type?: Maybe<Scalars['String']>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarksFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentContentMarksFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentContentMarksFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonContentFilterInput = {
+  content?: Maybe<SitePageContextDescriptionJsonContentContentFilterListInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
+};
+
+export type SitePageContextDescriptionJsonContentFilterListInput = {
+  elemMatch?: Maybe<SitePageContextDescriptionJsonContentFilterInput>,
+};
+
+export type SitePageContextDescriptionJsonFilterInput = {
+  content?: Maybe<SitePageContextDescriptionJsonContentFilterListInput>,
+  nodeType?: Maybe<StringQueryOperatorInput>,
 };
 
 export type SitePageContextFilterInput = {
@@ -4244,6 +4324,8 @@ export type SitePageFieldsEnum =
   'context___playingTimeTo' |
   'context___targetAgeFrom' |
   'context___description___description' |
+  'context___description___json___content' |
+  'context___description___json___nodeType' |
   'context___bggUrl___bggUrl' |
   'context___updatedAt' |
   'pluginCreator___id' |
@@ -4686,5 +4768,5 @@ export type GamesForEachPagesQueryVariables = {};
 
 export type GamesForEachPagesQuery = { allContentfulGame: { nodes: Array<(
       Pick<ContentfulGame, 'id' | 'name' | 'playersFrom' | 'playersTo' | 'playingTimeFrom' | 'playingTimeTo' | 'targetAgeFrom' | 'updatedAt'>
-      & { description: Maybe<Pick<ContentfulGameDescriptionRichTextNode, 'description'>>, bggUrl: Maybe<Pick<ContentfulGameBggUrlTextNode, 'bggUrl'>> }
+      & { description: Maybe<Pick<ContentfulGameDescriptionRichTextNode, 'description' | 'json'>>, bggUrl: Maybe<Pick<ContentfulGameBggUrlTextNode, 'bggUrl'>> }
     )> } };

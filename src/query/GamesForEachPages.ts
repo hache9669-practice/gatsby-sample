@@ -14,6 +14,7 @@ query GamesForEachPages {
       targetAgeFrom
       description {
         description
+        json
       }
       bggUrl {
         bggUrl

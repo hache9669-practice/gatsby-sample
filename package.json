@@ -26,6 +26,8 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
+    "@contentful/rich-text-types": "^13.4.0",
     "prettier": "^1.19.1"
   },
   "keywords": [
