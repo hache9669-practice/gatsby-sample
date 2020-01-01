@@ -560,6 +560,7 @@ export type ContentfulArticleFieldsEnum =
   'sys___contentType___sys___type' |
   'sys___contentType___sys___linkType' |
   'sys___contentType___sys___id' |
+  'sys___contentType___sys___contentful_id' |
   'node_locale' |
   'childContentfulArticleContentRichTextNode___id' |
   'childContentfulArticleContentRichTextNode___parent___id' |
@@ -656,12 +657,14 @@ export type ContentfulArticleSysContentTypeSys = {
   type?: Maybe<Scalars['String']>,
   linkType?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['String']>,
+  contentful_id?: Maybe<Scalars['String']>,
 };
 
 export type ContentfulArticleSysContentTypeSysFilterInput = {
   type?: Maybe<StringQueryOperatorInput>,
   linkType?: Maybe<StringQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
+  contentful_id?: Maybe<StringQueryOperatorInput>,
 };
 
 export type ContentfulArticleSysFilterInput = {
@@ -1942,6 +1945,7 @@ export type ContentfulGameFieldsEnum =
   'sys___contentType___sys___type' |
   'sys___contentType___sys___linkType' |
   'sys___contentType___sys___id' |
+  'sys___contentType___sys___contentful_id' |
   'node_locale' |
   'playingTimeFrom' |
   'childContentfulGameDescriptionRichTextNode___id' |
@@ -2091,12 +2095,14 @@ export type ContentfulGameSysContentTypeSys = {
   type?: Maybe<Scalars['String']>,
   linkType?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['String']>,
+  contentful_id?: Maybe<Scalars['String']>,
 };
 
 export type ContentfulGameSysContentTypeSysFilterInput = {
   type?: Maybe<StringQueryOperatorInput>,
   linkType?: Maybe<StringQueryOperatorInput>,
   id?: Maybe<StringQueryOperatorInput>,
+  contentful_id?: Maybe<StringQueryOperatorInput>,
 };
 
 export type ContentfulGameSysFilterInput = {

@@ -21,6 +21,7 @@ const Component: React.FC<Props> = ({ pageContext }) => (
       <li>対象年齢：{pageContext.targetAgeFrom}歳～</li>
       <li>{documentToReactComponents(pageContext.description.json)}</li>
       <li>最終更新：{pageContext.updatedAt}</li>
+      <li><a href={pageContext.bggUrl.bggUrl} target="_blank">Open BGG</a></li>
       <li><Link to="/">Back to top</Link></li>
     </ul>
     <pre>
